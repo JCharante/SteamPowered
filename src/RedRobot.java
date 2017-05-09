@@ -285,9 +285,10 @@ public class RedRobot extends Actor {
                 }
 
                 if(Greenfoot.isKeyDown(this.backToTitleKey)) {
-                    Greenfoot.setWorld(new Title());
+                    Greenfoot.playSound("foghorn.wav");
                     Settings.music.stop();
                     MyWorld.music.stop();
+                    Greenfoot.setWorld(new Title());
                 }
             }
 
