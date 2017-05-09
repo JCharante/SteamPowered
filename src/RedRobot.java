@@ -21,12 +21,12 @@ public class RedRobot extends Actor {
     int shoottime = 0;
     int facing = 0;
     String backToTitleKey;
-    String J;
-    String L;
-    String R;
-    String G;
-    String P;
-    String S;
+    String jumpKey;
+    String moveLeftKey;
+    String moveRightKey;
+    String placeGearKey;
+    String pickupFuelKey;
+    String shootKey;
     boolean autoaim = true;
     boolean autocollect = false;
     String modif = "";
@@ -38,12 +38,12 @@ public class RedRobot extends Actor {
 
     public RedRobot() {
         this.backToTitleKey = Title.backToTitle;
-        this.J = Title.redJump;
-        this.L = Title.redLeft;
-        this.R = Title.redRight;
-        this.G = Title.redGear;
-        this.P = Title.redPickup;
-        this.S = Title.redShoot;
+        this.jumpKey = Title.redJump;
+        this.moveLeftKey = Title.redLeft;
+        this.moveRightKey = Title.redRight;
+        this.placeGearKey = Title.redGear;
+        this.pickupFuelKey = Title.redPickup;
+        this.shootKey = Title.redShoot;
         this.autoaim = Title.autoaim;
         this.autocollect = Title.autopickup;
     }
@@ -132,7 +132,7 @@ public class RedRobot extends Actor {
                 this.getWorld().removeObject(g);
             }
 
-            if(Greenfoot.isKeyDown(this.G)) {
+            if(Greenfoot.isKeyDown(this.placeGearKey)) {
                 if(this.gbl) {
                     this.getWorld().addObject(new Gear(154), 1234, 282);
                 }
@@ -235,17 +235,17 @@ public class RedRobot extends Actor {
                     }
                 }
 
-                if(Greenfoot.isKeyDown(this.R) && (this.vel[0] < (double)this.terminal[0] || ((Integer)w.redpowerups.get("speed")).intValue() > 0) && !this.moveLock[0]) {
+                if(Greenfoot.isKeyDown(this.moveRightKey) && (this.vel[0] < (double)this.terminal[0] || ((Integer)w.redpowerups.get("speed")).intValue() > 0) && !this.moveLock[0]) {
                     this.vel[0] += this.accel;
                     this.facing = 0;
                 }
 
-                if(Greenfoot.isKeyDown(this.L) && (this.vel[0] > (double)(-this.terminal[0]) || ((Integer)w.redpowerups.get("speed")).intValue() > 0) && !this.moveLock[1]) {
+                if(Greenfoot.isKeyDown(this.moveLeftKey) && (this.vel[0] > (double)(-this.terminal[0]) || ((Integer)w.redpowerups.get("speed")).intValue() > 0) && !this.moveLock[1]) {
                     this.vel[0] -= this.accel;
                     this.facing = 1;
                 }
 
-                if(!Greenfoot.isKeyDown(this.L) && !Greenfoot.isKeyDown(this.R)) {
+                if(!Greenfoot.isKeyDown(this.moveLeftKey) && !Greenfoot.isKeyDown(this.moveRightKey)) {
                     if(this.vel[0] < 0.0D) {
                         this.vel[0] += this.accel;
                     }
@@ -255,7 +255,7 @@ public class RedRobot extends Actor {
                     }
                 }
 
-                if(Greenfoot.isKeyDown(this.J) && !this.moveLock[2]) {
+                if(Greenfoot.isKeyDown(this.jumpKey) && !this.moveLock[2]) {
                     this.rop = (Rope)this.getOneIntersectingObject(Rope.class);
                     if(this.rop != null) {
                         this.onRope = true;
@@ -284,6 +284,7 @@ public class RedRobot extends Actor {
                     }
                 }
 
+                // Handles going back to the Title Screen if the configured Key is pressed.
                 if(Greenfoot.isKeyDown(this.backToTitleKey)) {
                     Greenfoot.playSound("foghorn.wav");
                     Settings.music.stop();
@@ -380,12 +381,12 @@ public class RedRobot extends Actor {
             }
 
             Ball ba = (Ball)this.getOneIntersectingObject(Ball.class);
-            if(ba != null && this.fuel < 40 && (Greenfoot.isKeyDown(this.P) || this.autocollect)) {
+            if(ba != null && this.fuel < 40 && (Greenfoot.isKeyDown(this.pickupFuelKey) || this.autocollect)) {
                 ++this.fuel;
                 this.getWorld().removeObject(ba);
             }
 
-            if(Greenfoot.isKeyDown(this.S) && this.shoottime == 0 && this.fuel > 0) {
+            if(Greenfoot.isKeyDown(this.shootKey) && this.shoottime == 0 && this.fuel > 0) {
                 --this.fuel;
                 this.shoottime = 10;
                 double vx;
