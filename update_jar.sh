@@ -1,1 +1,2 @@
-jar -uf ModifiedSteamPowered.jar -C output/production/ModifiedSteamPowered/ Title.class
+#!/usr/bin/env bash
+jar -uf SteamPowered++.jar -C output/production/ModifiedSteamPowered/ Title.class
