@@ -1,2 +1,3 @@
-# ModifiedSteamPowered
-Modifying SteamPowered by 2410. 
+# SteamPowered++
+
+A fork of SteamPowered by frc2410.
