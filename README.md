@@ -2,6 +2,8 @@
 
 A fork of SteamPowered by frc2410.
 
+A changelog is visible on the [website](http://steampowered.jcharante.com/)
+
 # Important Notice
 
 The modified `.java` files in the [src/](src/) folder were obtained by running the original release through a decompiler.
