@@ -20,7 +20,7 @@ public class RedRobot extends Actor {
     int geartime = 0;
     int shoottime = 0;
     int facing = 0;
-    String backToTitle;
+    String backToTitleKey;
     String J;
     String L;
     String R;
@@ -37,7 +37,7 @@ public class RedRobot extends Actor {
     int pintime = 0;
 
     public RedRobot() {
-        this.backToTitle = Title.backToTitle;
+        this.backToTitleKey = Title.backToTitle;
         this.J = Title.redJump;
         this.L = Title.redLeft;
         this.R = Title.redRight;
@@ -284,7 +284,7 @@ public class RedRobot extends Actor {
                     }
                 }
 
-                if(Greenfoot.isKeyDown(this.backToTitle)) {
+                if(Greenfoot.isKeyDown(this.backToTitleKey)) {
                     Greenfoot.setWorld(new Title());
                     Settings.music.stop();
                     MyWorld.music.stop();
