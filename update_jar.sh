@@ -4,3 +4,5 @@ jar -uf SteamPowered++.jar \
 -C output/production/SteamPowered++/ RedRobot.class \
 -C src/ sounds/foghorn.wav \
 -C src/ soundindex.list
+
+rm jartmp*
