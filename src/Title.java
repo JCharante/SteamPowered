@@ -35,7 +35,12 @@ public class Title extends World {
         super(1256, 570, 1);
         this.addObject(new StartButton(), 628, 325);
         this.addObject(new SettingsButton(), 628, 475);
+
+        // Contributor Text
         this.addObject(new Text("JCharante\nB.E.R.T.'s Biggest Fan\nTeam 2410\nThe Metal Mustangs", 30, Color.ORANGE, (Color)null, Color.BLACK), 1090, 500);
+        // Version Text
+        this.addObject(new Text("SteamPowered++ v2.1", 30, Color.BLACK, (Color)null, Color.WHITE), 164, 555);
+
         ptime.put("regolith", 1000);
         ptime.put("fire", 500);
         ptime.put("freeze", 250);
