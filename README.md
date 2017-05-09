@@ -4,6 +4,22 @@ A fork of SteamPowered by frc2410.
 
 # Important Notice
 
-The modified `.java` files in the [src/](src/) folder were obtained by running the original release through a compiler.
+The modified `.java` files in the [src/](src/) folder were obtained by running the original release through a decompiler.
 
-Please do not use the resulting files to measure the ability of the creators, as it was never intended to be published.
+Please do not use the resulting files to measure the ability of the creators, as `SteamPowered` was never intended to be published.
+
+## Development Setup
+
+### 1. Download `SteamPowered.jar` from CD thread.
+
+### 2. Setup Dev Environment
+
+I personally use IntelliJ. You would want to set the [src/](src/) folder as your source folder, `output/` as your output folder, and set `SteamPowered.jar` as a dependency.
+
+### 2. Setup Output Jar
+
+```bash
+$ cp SteamPowered.jar SteamPowered++.jar
+```
+
+Whenever you run `./update_jar.sh`, files in `src/` and `output/` will be injected into `SteamPowered++.jar`
