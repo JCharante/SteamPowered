@@ -5,6 +5,7 @@ jar -uf SteamPowered++.jar \
 -C src/ sounds/foghorn.wav \
 -C src/ soundindex.list \
 -C output/production/SteamPowered++/ Feeder.class \
--C output/production/SteamPowered++/ BlueRobot.class
+-C output/production/SteamPowered++/ BlueRobot.class \
+-C output/production/SteamPowered++/ PlusPlusSettings.class
 
 rm jartmp*

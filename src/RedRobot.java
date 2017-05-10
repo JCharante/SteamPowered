@@ -18,13 +18,13 @@ public class RedRobot extends Actor {
     int fuel = 10;
     boolean gbl = true;
     int geartime = 0;
-    int shoottime = 0;
     int facing = 0;
+    private long lastShotFuel;
     String backToTitleKey;
     String jumpKey;
     String moveLeftKey;
     String moveRightKey;
-    String placeGearKey;
+    String slideGearKey;
     String pickupFuelKey;
     String shootKey;
     boolean autoaim = true;
@@ -37,15 +37,53 @@ public class RedRobot extends Actor {
     int pintime = 0;
 
     public RedRobot() {
+        lastShotFuel = System.currentTimeMillis();
+
         this.backToTitleKey = Title.backToTitle;
         this.jumpKey = Title.redJump;
         this.moveLeftKey = Title.redLeft;
         this.moveRightKey = Title.redRight;
-        this.placeGearKey = Title.redGear;
+        this.slideGearKey = Title.redGear;
         this.pickupFuelKey = Title.redPickup;
         this.shootKey = Title.redShoot;
         this.autoaim = Title.autoaim;
         this.autocollect = Title.autopickup;
+    }
+
+    private boolean enoughTimeSurpassedToShoot() {
+        return (System.currentTimeMillis() - lastShotFuel) > PlusPlusSettings.millisecondsInBetweenShots;
+    }
+
+    private void shoot(MyWorld w) {
+        if(this.fuel > 0 && enoughTimeSurpassedToShoot()) {
+            --this.fuel;
+            lastShotFuel = System.currentTimeMillis();
+
+            double vx;
+            double vy;
+            if(this.autoaim) {
+                BoilerScore TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(1 - this.facing);
+                double t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
+                double t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
+                vx = (double)(TB.getX() - this.getX()) / (t1 + t2);
+                vy = t1 / 2.0D;
+                vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
+            } else {
+                if(this.facing == 0) {
+                    vx = 8.0D;
+                } else {
+                    vx = -8.0D;
+                }
+
+                vy = 15.0D;
+                vx += Math.random() * 2.0D - 1.0D;
+            }
+
+            this.getWorld().addObject(new Ball(vx, vy, this.getX(), this.getY() - 45, ((Integer)w.redpowerups.get("fire")).intValue() > 0), this.getX(), this.getY() - 45);
+            if(Title.sounds && ((Integer)w.redpowerups.get("fire")).intValue() > 0) {
+                Greenfoot.playSound("whoosh.wav");
+            }
+        }
     }
 
     public void act() {
@@ -132,7 +170,7 @@ public class RedRobot extends Actor {
                 this.getWorld().removeObject(g);
             }
 
-            if(Greenfoot.isKeyDown(this.placeGearKey)) {
+            if(Greenfoot.isKeyDown(this.slideGearKey)) {
                 if(this.gbl) {
                     this.getWorld().addObject(new Gear(154), 1234, 282);
                 }
@@ -386,37 +424,8 @@ public class RedRobot extends Actor {
                 this.getWorld().removeObject(ba);
             }
 
-            if(Greenfoot.isKeyDown(this.shootKey) && this.shoottime == 0 && this.fuel > 0) {
-                --this.fuel;
-                this.shoottime = 10;
-                double vx;
-                double vy;
-                if(this.autoaim) {
-                    BoilerScore TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(1 - this.facing);
-                    double t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
-                    double t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
-                    vx = (double)(TB.getX() - this.getX()) / (t1 + t2);
-                    vy = t1 / 2.0D;
-                    vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
-                } else {
-                    if(this.facing == 0) {
-                        vx = 8.0D;
-                    } else {
-                        vx = -8.0D;
-                    }
-
-                    vy = 15.0D;
-                    vx += Math.random() * 2.0D - 1.0D;
-                }
-
-                this.getWorld().addObject(new Ball(vx, vy, this.getX(), this.getY() - 45, ((Integer)w.redpowerups.get("fire")).intValue() > 0), this.getX(), this.getY() - 45);
-                if(Title.sounds && ((Integer)w.redpowerups.get("fire")).intValue() > 0) {
-                    Greenfoot.playSound("whoosh.wav");
-                }
-            }
-
-            if(this.shoottime > 0) {
-                --this.shoottime;
+            if(Greenfoot.isKeyDown(this.shootKey)) {
+                shoot(w);
             }
         }
 

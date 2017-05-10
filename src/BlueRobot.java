@@ -18,8 +18,8 @@ public class BlueRobot extends Actor {
     int fuel = 10;
     boolean gbl = true;
     int geartime = 0;
-    int shoottime = 0;
     int facing = 0;
+    private long lastShotFuel;
     String backToTitleKey;
     String jumpKey;
     String moveLeftKey;
@@ -37,6 +37,8 @@ public class BlueRobot extends Actor {
     int pintime = 0;
 
     public BlueRobot() {
+        lastShotFuel = System.currentTimeMillis();
+
         this.backToTitleKey = Title.backToTitle;
         this.jumpKey = Title.blueJump;
         this.moveLeftKey = Title.blueLeft;
@@ -46,6 +48,42 @@ public class BlueRobot extends Actor {
         this.shootKey = Title.blueShoot;
         this.autoaim = Title.autoaim;
         this.autocollect = Title.autopickup;
+    }
+
+    private boolean enoughTimeSurpassedToShoot() {
+        return (System.currentTimeMillis() - lastShotFuel) > PlusPlusSettings.millisecondsInBetweenShots;
+    }
+
+    private void shoot(MyWorld w) {
+        if(this.fuel > 0 && enoughTimeSurpassedToShoot()) {
+            --this.fuel;
+            lastShotFuel = System.currentTimeMillis();
+
+            double vx;
+            double vy;
+            if(this.autoaim) {
+                BoilerScore TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(this.facing);
+                double t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
+                double t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
+                vx = (double)(TB.getX() - this.getX()) / (t1 + t2);
+                vy = t1 / 2.0D;
+                vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
+            } else {
+                if(this.facing == 1) {
+                    vx = 8.0D;
+                } else {
+                    vx = -8.0D;
+                }
+
+                vy = 15.0D;
+                vx += Math.random() * 2.0D - 1.0D;
+            }
+
+            this.getWorld().addObject(new Ball(vx, vy, this.getX(), this.getY() - 45, ((Integer)w.bluepowerups.get("fire")).intValue() > 0), this.getX(), this.getY() - 45);
+            if(Title.sounds && ((Integer)w.bluepowerups.get("fire")).intValue() > 0) {
+                Greenfoot.playSound("whoosh.wav");
+            }
+        }
     }
 
     public void act() {
@@ -386,37 +424,8 @@ public class BlueRobot extends Actor {
                 this.getWorld().removeObject(b);
             }
 
-            if(Greenfoot.isKeyDown(this.shootKey) && this.shoottime == 0 && this.fuel > 0) {
-                --this.fuel;
-                this.shoottime = 10;
-                double vx;
-                double vy;
-                if(this.autoaim) {
-                    BoilerScore TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(this.facing);
-                    double t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
-                    double t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
-                    vx = (double)(TB.getX() - this.getX()) / (t1 + t2);
-                    vy = t1 / 2.0D;
-                    vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
-                } else {
-                    if(this.facing == 1) {
-                        vx = 8.0D;
-                    } else {
-                        vx = -8.0D;
-                    }
-
-                    vy = 15.0D;
-                    vx += Math.random() * 2.0D - 1.0D;
-                }
-
-                this.getWorld().addObject(new Ball(vx, vy, this.getX(), this.getY() - 45, ((Integer)w.bluepowerups.get("fire")).intValue() > 0), this.getX(), this.getY() - 45);
-                if(Title.sounds && ((Integer)w.bluepowerups.get("fire")).intValue() > 0) {
-                    Greenfoot.playSound("whoosh.wav");
-                }
-            }
-
-            if(this.shoottime > 0) {
-                --this.shoottime;
+            if(Greenfoot.isKeyDown(this.shootKey)) {
+                shoot(w);
             }
         }
 
