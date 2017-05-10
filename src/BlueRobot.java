@@ -54,6 +54,13 @@ public class BlueRobot extends Actor {
         return (System.currentTimeMillis() - lastShotFuel) > PlusPlusSettings.millisecondsInBetweenShots;
     }
 
+    private void backToTitleScreen() {
+        Greenfoot.playSound("foghorn.wav");
+        Settings.music.stop();
+        MyWorld.music.stop();
+        Greenfoot.setWorld(new Title());
+    }
+
     private void shoot(MyWorld w) {
         if(this.fuel > 0 && enoughTimeSurpassedToShoot()) {
             --this.fuel;
@@ -88,6 +95,11 @@ public class BlueRobot extends Actor {
 
     public void act() {
         MyWorld w = (MyWorld)this.getWorld();
+
+        if(Greenfoot.isKeyDown(this.backToTitleKey)) {
+            backToTitleScreen();
+        }
+
         if(((Integer)w.redpowerups.get("freeze")).intValue() == 0 && !this.disabled) {
             this.r = (RedRobot)this.getOneIntersectingObject(RedRobot.class);
             if(this.r != null && this.pintime == 0 && ((Integer)w.redpowerups.get("biasref")).intValue() > 0) {
@@ -320,14 +332,6 @@ public class BlueRobot extends Actor {
                         this.onRope = false;
                         this.onCrate = false;
                     }
-                }
-
-                // Handles going back to the Title Screen if the configured Key is pressed.
-                if(Greenfoot.isKeyDown(this.backToTitleKey)) {
-                    Greenfoot.playSound("foghorn.wav");
-                    Settings.music.stop();
-                    MyWorld.music.stop();
-                    Greenfoot.setWorld(new Title());
                 }
             }
 
