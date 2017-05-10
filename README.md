@@ -8,7 +8,7 @@ A changelog is visible on the [website](http://steampowered.jcharante.com/)
 
 The modified `.java` files in the [src/](src/) folder were obtained by running the original release through a decompiler.
 
-Please do not use the resulting files to measure the ability of the creators, as `SteamPowered` was never intended to be published.
+Please do not use the resulting files to measure the ability of the creators, as `SteamPowered` was never intended to be published, and these aren't the real source files (remember it was decompiled).
 
 ## Development Setup
 
