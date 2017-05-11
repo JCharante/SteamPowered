@@ -72,8 +72,8 @@ public class MyWorld extends World {
         this.addObject(new RedRotor(), this.rap + 2, 216);
         this.addObject(new RedRotor(), this.rap - 93, 216);
         this.addObject(new RedRotor(), this.rap + 92, 216);
-        this.addObject(new Text("Qualification 133 of 140", 20, Color.BLACK, (Color)null, (Color)null), 400, 425);
-        this.addObject(new Text("Beantown Blitz", 20, Color.BLACK, (Color)null, (Color)null), 880, 425);
+        this.addObject(new Text("Qualification 133 of 140", 24, Color.BLACK, (Color)null, (Color)null), 400, 425);
+        this.addObject(new Text("Beantown Blitz", 24, Color.BLACK, (Color)null, (Color)null), 880, 425);
 
 
         for(int i = 0; i < Title.allpowerups.length; ++i) {
