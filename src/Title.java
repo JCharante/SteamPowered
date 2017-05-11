@@ -39,7 +39,7 @@ public class Title extends World {
         // Contributor Text
         this.addObject(new Text("JCharante\nB.E.R.T.'s Biggest Fan\nTeam 2410\nThe Metal Mustangs", 30, Color.ORANGE, (Color)null, Color.BLACK), 1090, 500);
         // Version Text
-        this.addObject(new Text("SteamPowered++ v2.2", 30, Color.WHITE, (Color)null, Color.BLACK), 164, 555);
+        this.addObject(new Text("SteamPowered++ v2.3", 30, Color.WHITE, (Color)null, Color.BLACK), 164, 555);
 
 
         ptime.put("regolith", 1000);
