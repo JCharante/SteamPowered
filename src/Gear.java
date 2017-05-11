@@ -11,8 +11,10 @@ public class Gear extends Actor {
 
     public void act() {
         this.move(this.vel);
-        Actor r = (Actor)this.getOneObjectAtOffset(0, 0, BoilerBottom.class);
-        if(r == null) {
+        Actor boilerBottom = this.getOneObjectAtOffset(0, 0, BoilerBottom.class);
+        if(boilerBottom == null) {
+
+            // Makes the gear acc. towards the ground after leaving the alliance station chute.
             if(this.vel < 10 && !onFloor) {
                 ++this.vel;
             }

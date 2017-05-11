@@ -54,6 +54,17 @@ public class BlueRobot extends Actor {
         return (System.currentTimeMillis() - lastShotFuel) > PlusPlusSettings.millisecondsInBetweenShots;
     }
 
+    private void checkForGearsToPickup() {
+        Gear gear = this.getOneIntersectingObject(Gear.class);
+        if (gear != null) {
+            boolean gearNextToGearIntake = this.facing == 0 ? gear.getX() > this.getX() : gear.getX() < this.getX();
+            if (gearNextToGearIntake && this.load[0] == 0) {
+                this.load[0] = 1;
+                this.getWorld().removeObject(gear);
+            }
+        }
+    }
+
     private void shoot(MyWorld w) {
         if(this.fuel > 0 && enoughTimeSurpassedToShoot()) {
             --this.fuel;
@@ -158,11 +169,7 @@ public class BlueRobot extends Actor {
                 this.moveLock[1] = false;
             }
 
-            Gear g = (Gear)this.getOneIntersectingObject(Gear.class);
-            if(g != null && (g.getX() < this.getX() && this.facing == 0 || g.getX() > this.getX() && this.facing == 1)) {
-                this.load[0] = 1;
-                this.getWorld().removeObject(g);
-            }
+            checkForGearsToPickup();
 
             if(Greenfoot.isKeyDown(this.slideGearKey)) {
                 if(this.gbl) {
