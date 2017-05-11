@@ -7,6 +7,7 @@ jar -uf SteamPowered++.jar \
 -C output/production/SteamPowered++/ PlusPlusSettings.class \
 -C output/production/SteamPowered++/ Settings.class \
 -C output/production/SteamPowered++/ ImprovedModableValue.class \
+-C output/production/SteamPowered++/ MyWorld.class \
 -C src/ sounds/foghorn.wav \
 -C src/ soundindex.list \
 -C src/ standalone.properties
