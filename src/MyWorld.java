@@ -14,6 +14,7 @@ public class MyWorld extends World {
     int spr;
     public Map<String, Integer> redpowerups;
     public Map<String, Integer> bluepowerups;
+    public Timer timer;
     int preg;
     int pink;
     int rrcan;
@@ -24,6 +25,7 @@ public class MyWorld extends World {
 
     public MyWorld() {
         super(1256, 570, 1);
+        timer = new Timer();
         this.bap = 1256 - this.rap;
         this.spawntime = 0;
         this.redpowerups = new HashMap();
@@ -34,7 +36,7 @@ public class MyWorld extends World {
         this.isound = false;
         this.setPaintOrder(new Class[]{Obscurer.class, Water.class, Actor.class});
         this.addObject(new ScoreBoard(), 628, 485);
-        this.addObject(new Timer(), 628, 468);
+        this.addObject(timer, 628, 468);
         this.addObject(new RedFuel(), 334, 538);
         this.addObject(new BlueFuel(), 922, 538);
         this.addObject(new RedRotors(), 216, 535);

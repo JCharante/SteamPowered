@@ -54,13 +54,6 @@ public class RedRobot extends Actor {
         return (System.currentTimeMillis() - lastShotFuel) > PlusPlusSettings.millisecondsInBetweenShots;
     }
 
-    private void backToTitleScreen() {
-        Greenfoot.playSound("foghorn.wav");
-        Settings.music.stop();
-        MyWorld.music.stop();
-        Greenfoot.setWorld(new Title());
-    }
-
     private void shoot(MyWorld w) {
         if(this.fuel > 0 && enoughTimeSurpassedToShoot()) {
             --this.fuel;
@@ -97,7 +90,7 @@ public class RedRobot extends Actor {
         MyWorld w = (MyWorld)this.getWorld();
 
         if(Greenfoot.isKeyDown(this.backToTitleKey)) {
-            backToTitleScreen();
+            w.timer.abortMatch();
         }
 
         if(((Integer)w.bluepowerups.get("freeze")).intValue() == 0 && !this.disabled) {
