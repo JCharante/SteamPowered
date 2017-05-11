@@ -4,11 +4,13 @@ A fork of SteamPowered by frc2410.
 
 A changelog is visible on the [website](http://steampowered.jcharante.com/)
 
-# Important Notice
+## Notice
 
 The modified `.java` files in the [src/](src/) folder were obtained by running the original release through a decompiler.
 
-Please do not use the resulting files to measure the ability of the creators, as `SteamPowered` was never intended to be published, and these aren't the real source files (remember it was decompiled).
+The resulting files aren't the best way to measure the ability of its creators, and are unpolished (we've all done it).
+
+Regardless, I'm working on cleaning it here and there.
 
 ## Development Setup
 
