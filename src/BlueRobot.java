@@ -88,6 +88,8 @@ public class BlueRobot extends Actor {
             w.timer.abortMatch();
         }
 
+        load[1] = PlusPlusSettings.shoppingCartFullness(fuel);
+
         if(((Integer)w.redpowerups.get("freeze")).intValue() == 0 && !this.disabled) {
             this.r = (RedRobot)this.getOneIntersectingObject(RedRobot.class);
             if(this.r != null && this.pintime == 0 && ((Integer)w.redpowerups.get("biasref")).intValue() > 0) {
@@ -123,14 +125,6 @@ public class BlueRobot extends Actor {
                 if(Title.sounds) {
                     Greenfoot.playSound("portal.wav");
                 }
-            }
-
-            if(this.fuel < 10) {
-                this.load[1] = 0;
-            } else if(this.fuel > 30) {
-                this.load[1] = 2;
-            } else {
-                this.load[1] = 1;
             }
 
             this.setImage(new GreenfootImage("Blue" + this.load[0] + "" + this.load[1] + "" + this.facing + this.modif + ".png"));
@@ -411,7 +405,7 @@ public class BlueRobot extends Actor {
             }
 
             Ball b = (Ball)this.getOneIntersectingObject(Ball.class);
-            if(b != null && this.fuel < 40 && (Greenfoot.isKeyDown(this.pickupFuelKey) || this.autocollect)) {
+            if(b != null && this.fuel < PlusPlusSettings.shoppingCartBallCapacity && (Greenfoot.isKeyDown(this.pickupFuelKey) || this.autocollect)) {
                 ++this.fuel;
                 this.getWorld().removeObject(b);
             }

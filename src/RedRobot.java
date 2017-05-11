@@ -81,12 +81,24 @@ public class RedRobot extends Actor {
         }
     }
 
+    void updateShoppingCartDrawing() {
+        if(fuel >= PlusPlusSettings.shoppingCartBallCapacity) {
+            load[1] = 2;
+        } else if (fuel > 0) {
+            load[1] = 1;
+        } else {
+            load[1] = 0;
+        }
+    }
+
     public void act() {
         MyWorld w = (MyWorld)this.getWorld();
 
         if(Greenfoot.isKeyDown(this.backToTitleKey)) {
             w.timer.abortMatch();
         }
+
+        load[1] = PlusPlusSettings.shoppingCartFullness(fuel);
 
         if(((Integer)w.bluepowerups.get("freeze")).intValue() == 0 && !this.disabled) {
             this.b = (BlueRobot)this.getOneIntersectingObject(BlueRobot.class);
@@ -123,14 +135,6 @@ public class RedRobot extends Actor {
                 if(Title.sounds) {
                     Greenfoot.playSound("portal.wav");
                 }
-            }
-
-            if(this.fuel < 10) {
-                this.load[1] = 0;
-            } else if(this.fuel > 30) {
-                this.load[1] = 2;
-            } else {
-                this.load[1] = 1;
             }
 
             this.setImage(new GreenfootImage("Red" + this.load[0] + "" + this.load[1] + "" + this.facing + this.modif + ".png"));
@@ -411,7 +415,7 @@ public class RedRobot extends Actor {
             }
 
             Ball ba = (Ball)this.getOneIntersectingObject(Ball.class);
-            if(ba != null && this.fuel < 40 && (Greenfoot.isKeyDown(this.pickupFuelKey) || this.autocollect)) {
+            if(ba != null && this.fuel < PlusPlusSettings.shoppingCartBallCapacity && (Greenfoot.isKeyDown(this.pickupFuelKey) || this.autocollect)) {
                 ++this.fuel;
                 this.getWorld().removeObject(ba);
             }
