@@ -69,12 +69,7 @@ public class BlueRobot extends Actor {
                 vy = t1 / 2.0D;
                 vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
             } else {
-                if(this.facing == 1) {
-                    vx = 8.0D;
-                } else {
-                    vx = -8.0D;
-                }
-
+                vx = this.facing == 1 ? 8.0D : -8.0D;
                 vy = 15.0D;
                 vx += Math.random() * 2.0D - 1.0D;
             }
