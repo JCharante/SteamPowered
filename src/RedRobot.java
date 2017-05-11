@@ -81,16 +81,6 @@ public class RedRobot extends Actor {
         }
     }
 
-    void updateShoppingCartDrawing() {
-        if(fuel >= PlusPlusSettings.shoppingCartBallCapacity) {
-            load[1] = 2;
-        } else if (fuel > 0) {
-            load[1] = 1;
-        } else {
-            load[1] = 0;
-        }
-    }
-
     public void act() {
         MyWorld w = (MyWorld)this.getWorld();
 
