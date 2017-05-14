@@ -74,7 +74,9 @@ public class Timer extends Actor {
     }
 
     public void abortMatch() {
-        Greenfoot.playSound("foghorn.wav");
+        if(Title.sounds) {
+            Greenfoot.playSound("foghorn.wav");
+        }
         MyWorld.music.stop();
         RedScore red = (RedScore)this.getWorld().getObjects(RedScore.class).get(0);
         BlueScore blue = (BlueScore)this.getWorld().getObjects(BlueScore.class).get(0);
