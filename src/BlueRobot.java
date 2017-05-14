@@ -76,9 +76,11 @@ public class BlueRobot extends Actor {
                 BoilerScore TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(this.facing);
                 double t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
                 double t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
-                vx = (double)(TB.getX() - this.getX()) / (t1 + t2);
+                double deltaX = TB.getX() - this.getX();
+                vx = deltaX / (t1 + t2);
                 vy = t1 / 2.0D;
-                vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
+                //vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
+                vx += (2.0D * Math.random() - 1.0D) * 0.5D;
             } else {
                 vx = this.facing == 1 ? 8.0D : -8.0D;
                 vy = 15.0D;
