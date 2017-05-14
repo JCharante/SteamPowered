@@ -23,7 +23,7 @@ public class Title extends World {
     public static String[] powerups = new String[]{"regolith", "fire", "freeze", "blindness", "watergame", "fillup", "portal", "speed", "space", "cutrope", "autoclimb", "nuke", "antiboiler", "biasref", "recyclerush"};
     public static String[] allpowerups = new String[]{"regolith", "fire", "freeze", "blindness", "watergame", "fillup", "portal", "speed", "space", "cutrope", "autoclimb", "nuke", "antiboiler", "biasref", "recyclerush"};
     public static int spawnrate = 0; // The value of PowerUps [Off, Low, High]
-    public static boolean autoaim = true;
+    public static boolean autoaim = false;
     public static boolean autopickup = true;
     public static boolean worlds = false;
     public static boolean bgsound = true;
