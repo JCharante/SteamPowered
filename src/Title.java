@@ -1,6 +1,8 @@
 import greenfoot.GreenfootSound;
 import greenfoot.World;
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +25,11 @@ public class Title extends World {
     public static String[] powerups = new String[]{"regolith", "fire", "freeze", "blindness", "watergame", "fillup", "portal", "speed", "space", "cutrope", "autoclimb", "nuke", "antiboiler", "biasref", "recyclerush"};
     public static String[] allpowerups = new String[]{"regolith", "fire", "freeze", "blindness", "watergame", "fillup", "portal", "speed", "space", "cutrope", "autoclimb", "nuke", "antiboiler", "biasref", "recyclerush"};
     public static int spawnrate = 0; // The value of PowerUps [Off, Low, High]
-    public static boolean autoaim = false;
+
+    public static ArrayList<String> shootingAssistanceTypes = new ArrayList<String>(Arrays.asList("Manual", "Auto Aim", "SATA Aim"));
+    public static int shootingAssistanceStartingIndex = 0;
+    public static String shootingAssistance = shootingAssistanceTypes.get(shootingAssistanceStartingIndex);
+
     public static boolean autopickup = true;
     public static boolean worlds = false;
     public static boolean bgsound = true;
@@ -39,8 +45,7 @@ public class Title extends World {
         // Contributor Text
         this.addObject(new Text("JCharante\nB.E.R.T.'s Biggest Fan\nTeam 2410\nThe Metal Mustangs", 30, Color.ORANGE, (Color)null, Color.BLACK), 1090, 500);
         // Version Text
-        this.addObject(new Text("SteamPowered++ v2.3", 30, Color.WHITE, (Color)null, Color.BLACK), 164, 555);
-
+        this.addObject(new Text("SteamPowered++ v2.4", 30, Color.WHITE, (Color)null, Color.BLACK), 164, 555);
 
         ptime.put("regolith", 1000);
         ptime.put("fire", 500);

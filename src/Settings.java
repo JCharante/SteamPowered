@@ -6,9 +6,12 @@ import java.awt.Color;
 public class Settings extends World {
     public String k;
     public static GreenfootSound music = new GreenfootSound("Elevator_Music.wav");
+    private ImprovedButtonChooser shootingAssistanceChooser;
 
     public Settings() {
         super(1256, 570, 1);
+
+        /* Left Column */
         this.addObject(new Text("Red Robot", 40, Color.RED, (Color)null, Color.BLACK), 209, 30);
         this.addObject(new Text("Jump", 30, Color.WHITE, (Color)null, Color.BLACK), 104, 75);
         this.addObject(new ImprovedModableValue(Title.redJump, Color.WHITE, (Color)null, Color.BLACK), 314, 75);
@@ -23,19 +26,31 @@ public class Settings extends World {
         this.addObject(new Text("Shoot", 30, Color.WHITE, (Color)null, Color.BLACK), 104, 300);
         this.addObject(new ImprovedModableValue(Title.redShoot, Color.WHITE, (Color)null, Color.BLACK), 314, 300);
 
-
+        /* Middle Column*/
         this.addObject(new Text("General", 40, Color.WHITE, (Color)null, Color.BLACK), 628, 30);
-        this.addObject(new Text("AutoAim", 30, Color.WHITE, (Color)null, Color.BLACK), 523, 75);
-        this.addObject(new Switch(Title.autoaim), 732, 75);
-        this.addObject(new Text("AutoCollect", 30, Color.WHITE, (Color)null, Color.BLACK), 523, 120);
-        this.addObject(new Switch(Title.autopickup), 732, 120);
-        this.addObject(new Text("Worlds Mode", 30, Color.WHITE, (Color)null, Color.BLACK), 523, 165);
-        this.addObject(new Switch(Title.worlds), 732, 165);
-        this.addObject(new Text("Music", 30, Color.WHITE, (Color)null, Color.BLACK), 523, 210);
-        this.addObject(new Switch(Title.bgsound), 732, 210);
-        this.addObject(new Text("Sounds", 30, Color.WHITE, (Color)null, Color.BLACK), 523, 255);
-        this.addObject(new Switch(Title.sounds), 732, 255);
 
+        int switchX = 732;
+        int textX = 523;
+        int startingY = 75;
+        int rowGap = 45;
+
+        this.addObject(new Text("Shooter: ", 30, Color.WHITE, (Color)null, Color.BLACK), textX, (startingY + rowGap * 0));
+        shootingAssistanceChooser = new ImprovedButtonChooser(Title.shootingAssistanceTypes, Title.shootingAssistance);
+        this.addObject(shootingAssistanceChooser, switchX, (startingY + rowGap * 0));
+
+        this.addObject(new Text("AutoCollect", 30, Color.WHITE, (Color)null, Color.BLACK), textX, (startingY + rowGap * 1));
+        this.addObject(new Switch(Title.autopickup), switchX, (startingY + rowGap * 1));
+
+        this.addObject(new Text("Worlds Mode", 30, Color.WHITE, (Color)null, Color.BLACK), textX, (startingY + rowGap * 2));
+        this.addObject(new Switch(Title.worlds), switchX, (startingY + rowGap * 2));
+
+        this.addObject(new Text("Music", 30, Color.WHITE, (Color)null, Color.BLACK), textX, (startingY + rowGap * 3));
+        this.addObject(new Switch(Title.bgsound), switchX, (startingY + rowGap * 3));
+
+        this.addObject(new Text("Sounds", 30, Color.WHITE, (Color)null, Color.BLACK), textX, (startingY + rowGap * 4));
+        this.addObject(new Switch(Title.sounds), switchX, (startingY + rowGap * 4));
+
+        /* Right Column*/
         this.addObject(new Text("Blue Robot", 40, Color.BLUE, (Color)null, Color.BLACK), 1046, 30);
         this.addObject(new Text("Jump", 30, Color.WHITE, (Color)null, Color.BLACK), 942, 75);
         this.addObject(new ImprovedModableValue(Title.blueJump, Color.WHITE, (Color)null, Color.BLACK), 1151, 75);
@@ -62,15 +77,18 @@ public class Settings extends World {
     }
 
     public void act() {
+        Title.shootingAssistance = shootingAssistanceChooser.value();
+
+        // Other Stuff
         ImprovedModableValue[] c = new ImprovedModableValue[12];
-        Switch[] s = new Switch[5];
+        Switch[] s = new Switch[4];
 
         int i;
         for(i = 0; i < 12; ++i) {
             c[i] = (ImprovedModableValue)this.getObjects(ImprovedModableValue.class).get(i);
         }
 
-        for(i = 0; i < 5; ++i) {
+        for(i = 0; i < 4; ++i) {
             s[i] = (Switch)this.getObjects(Switch.class).get(i);
         }
         // TODO: Fix all of this
@@ -87,10 +105,9 @@ public class Settings extends World {
         Title.blueGear = c[9].value;
         Title.bluePickup = c[10].value;
         Title.blueShoot = c[11].value;
-        Title.autoaim = s[0].on;
-        Title.autopickup = s[1].on;
-        Title.worlds = s[2].on;
-        Title.bgsound = s[3].on;
-        Title.sounds = s[4].on;
+        Title.autopickup = s[0].on;
+        Title.worlds = s[1].on;
+        Title.bgsound = s[2].on;
+        Title.sounds = s[3].on;
     }
 }

@@ -46,7 +46,6 @@ public class BlueRobot extends Actor {
         this.slideGearKey = Title.blueGear;
         this.pickupFuelKey = Title.bluePickup;
         this.shootKey = Title.blueShoot;
-        this.autoaim = Title.autoaim;
         this.autocollect = Title.autopickup;
     }
 
@@ -72,19 +71,35 @@ public class BlueRobot extends Actor {
 
             double vx;
             double vy;
-            if(this.autoaim) {
-                BoilerScore TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(this.facing);
-                double t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
-                double t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
-                double deltaX = TB.getX() - this.getX();
-                vx = deltaX / (t1 + t2);
-                vy = t1 / 2.0D;
-                //vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
-                vx += (2.0D * Math.random() - 1.0D) * 0.5D;
-            } else {
-                vx = this.facing == 1 ? 8.0D : -8.0D;
-                vy = 15.0D;
-                vx += Math.random() * 2.0D - 1.0D;
+            double t1;
+            double t2;
+            double deltaX;
+            BoilerScore TB;
+
+            switch (Title.shootingAssistance) {
+                case "SATA Aim":
+                    TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(this.facing);
+                    t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
+                    t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
+                    deltaX = TB.getX() - this.getX();
+                    vx = deltaX / (t1 + t2);
+                    vy = t1 / 2.0D;
+                    break;
+                case "Auto Aim":
+                    TB = (BoilerScore)this.getWorld().getObjects(BoilerScore.class).get(this.facing);
+                    t1 = Math.sqrt((double)(4 * (this.getY() - 55)));
+                    t2 = Math.sqrt((double)(4 * (TB.getY() - 10)));
+                    deltaX = TB.getX() - this.getX();
+                    vx = deltaX / (t1 + t2);
+                    vy = t1 / 2.0D;
+                    //vx += Math.random() * (vx / 4.0D) - vx / 8.0D;
+                    vx += (2.0D * Math.random() - 1.0D) * 0.5D;
+                    break;
+                default:
+                    vx = this.facing == 1 ? 8.0D : -8.0D;
+                    vy = 15.0D;
+                    vx += Math.random() * 2.0D - 1.0D;
+                    break;
             }
 
             this.getWorld().addObject(new Ball(vx, vy, this.getX(), this.getY() - 45, ((Integer)w.bluepowerups.get("fire")).intValue() > 0), this.getX(), this.getY() - 45);
